@@ -11,7 +11,7 @@ interface ApiService {
 
 
     /**
-     * Business
+     * getting users data
      * */
     @GET("users")
     fun getUserData(): Call<JsonObject>
