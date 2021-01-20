@@ -1,5 +1,6 @@
 package com.LineCard.userprofileprojectquestionone.api
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.GET
@@ -14,7 +15,7 @@ interface ApiService {
      * getting users data
      * */
     @GET("users")
-    fun getUserData(): Call<JsonObject>
+    fun getUserData(): Call<JsonArray>
 
 
 

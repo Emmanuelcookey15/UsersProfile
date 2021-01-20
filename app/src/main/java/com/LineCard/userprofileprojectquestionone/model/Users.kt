@@ -12,6 +12,7 @@ class Users {
     var name: String=""
     var username: String=""
     var email: String=""
+    var phone: String=""
     var image: String=""
 
 }

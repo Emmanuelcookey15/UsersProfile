@@ -11,7 +11,7 @@ interface UsersDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertData(currencyVal: Users)
+    fun insertData(users: Users)
 
     @Query("SELECT * FROM users_table WHERE id LIKE :id ORDER BY id")
     fun selectUser(id: Int): LiveData<Users>
@@ -21,7 +21,6 @@ interface UsersDao {
 
     // /** get all product **/
     @Query("SELECT * FROM  users_table")
-    fun getAllProducts(): LiveData<List<Users>>
-
+    fun getAllUsers(): LiveData<List<Users>>
 
 }
