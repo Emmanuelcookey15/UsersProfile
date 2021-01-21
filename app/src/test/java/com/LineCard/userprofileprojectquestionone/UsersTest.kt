@@ -25,6 +25,8 @@ class UsersTest {
         aUser.id = 1
         aUser.name = "My Name"
         assertNotSame(aUser.id, "1")
+        assertNotSame(aUser.id, 1.0)
+        assertSame(aUser.id, 1)
     }
 
     @Test
