@@ -13,6 +13,6 @@ class Users {
     var username: String=""
     var email: String=""
     var phone: String=""
-    var image: String=""
+
 
 }

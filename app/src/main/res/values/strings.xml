@@ -3,4 +3,6 @@
     <string name="username">Username</string>
     <string name="name">Name</string>
     <string name="email">email</string>
+    <string name="users">Users</string>
+    <string name="create_user">Create User</string>
 </resources>

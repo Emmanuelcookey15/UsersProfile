@@ -5,11 +5,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.LineCard.userprofileprojectquestionone.api.ApiService
+import com.LineCard.userprofileprojectquestionone.model.UserImage
 import com.LineCard.userprofileprojectquestionone.model.Users
-import com.LineCard.userprofileprojectquestionone.model.UsersDao
-import com.LineCard.userprofileprojectquestionone.model.UsersDatabases
+import com.LineCard.userprofileprojectquestionone.persistence.UserImageDao
+import com.LineCard.userprofileprojectquestionone.persistence.UsersDao
+import com.LineCard.userprofileprojectquestionone.persistence.UsersDatabases
 import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -19,7 +20,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.StringBuilder
 import kotlin.coroutines.CoroutineContext
 
 class UsersRepository {
@@ -85,8 +85,9 @@ class UsersRepository {
                         val users = Users()
                         users.id = datavalue.asJsonObject.get("id").asInt
                         users.name = datavalue.asJsonObject.get("name").asString
+                        users.email = datavalue.asJsonObject.get("email").asString
                         users.username = datavalue.asJsonObject.get("username").asString
-                        users.phone = datavalue.asJsonObject.get("username").asString
+                        users.phone = datavalue.asJsonObject.get("phone").asString
 
                         usersList.add(users)
                     }
@@ -133,10 +134,36 @@ class UsersRepository {
         return userData
     }
 
-    fun updateUser(id: Int, image: String, application: Application) {
+    fun getTotalUserNumber(application: Application): LiveData<Int> {
+        val num = initializeDatabase(application).userCount()
+        return num
+    }
+
+
+
+    // Userimage Dao portion
+
+    private fun initializeImageDatabase(application: Application): UserImageDao {
+        return UsersDatabases.getDatabase(application).usersImageDao()
+    }
+
+
+    fun insertImageData(data: UserImage, application: Application){
         scope.launch(Dispatchers.IO)  {
-            initializeDatabase(application).updateUser(id, image)
+            initializeImageDatabase(application).insertImage(data)
         }
+    }
+
+
+    fun updateImage(id: Int, image: String, application: Application) {
+        scope.launch(Dispatchers.IO)  {
+            initializeImageDatabase(application).updateUserImage(id, image)
+        }
+    }
+
+    fun getSpecificImage(id: Int, application: Application): LiveData<UserImage>{
+        val imageData = initializeImageDatabase(application).selectImage(id)
+        return imageData
     }
 
 }
